@@ -23,7 +23,7 @@
  *
  * File        cli.h
  * Created by  Sean Farrelly
- * Version     1.0
+ * Version     1.1
  *
  */
 
@@ -33,44 +33,47 @@
 #include <stddef.h>
 
 #ifndef MAX_BUF_SIZE
-#define MAX_BUF_SIZE 128 /* Maximum size of CLI Rx buffer */
+#define MAX_BUF_SIZE 128  /* Maximum size of CLI Rx buffer */
 #endif
 
 #ifndef CMD_TERMINATOR
-#define CMD_TERMINATOR '\r' /* Delimiter denoting end of cmd from user */
+#define CMD_TERMINATOR '\r'  /* Delimiter denoting end of cmd from user */
 #endif
 
+typedef struct cmd_s cmd_t;
+typedef struct cli_s cli_t;
+
 typedef enum {
-	CLI_OK,		/* API execution successful.                */
-	CLI_E_NULL_PTR, /* Null pointer error.                      */
-	CLI_E_IO,
-	CLI_E_CMD_NOT_FOUND, /* Command name not found in command table. */
-	CLI_E_INVALID_ARGS,  /* Invalid function parameters/arguments.   */
-	CLI_E_BUF_FULL,	     /* CLI buffer full.                         */
-	CLI_IDLE	     /* No command to execute at the moment      */
+    CLI_OK,               /* API execution successful.                */
+    CLI_E_NULL_PTR,       /* Null pointer error.                      */
+    CLI_E_IO,
+    CLI_E_CMD_NOT_FOUND,  /* Command name not found in command table. */
+    CLI_E_INVALID_ARGS,   /* Invalid function parameters/arguments.   */
+    CLI_E_BUF_FULL,       /* CLI buffer full.                         */
+    CLI_IDLE              /* No command to execute at the moment      */
 } cli_status_t;
 
 /*!
  * @brief Function type declarations.
  */
-typedef cli_status_t (*cmd_func_ptr_t)(int argc, char **argv);
-typedef void (*println_func_ptr_t)(char *string);
+typedef cli_status_t (*cmd_func_ptr_t)(cli_t* cli, int argc, char** argv);
+typedef void (*println_func_ptr_t)(char* string);
 
 /*!
  * @brief Command structure, consisting of a name and function pointer.
  */
-typedef struct {
-	char *cmd;	     /* Command name.                            */
-	cmd_func_ptr_t func; /* Function pointer to associated function. */
-} cmd_t;
+struct cmd_s {
+    char* cmd;            /* Command name.                            */
+    cmd_func_ptr_t func;  /* Function pointer to associated function. */
+};
 
 /*!
  * @brief Command-line interface handle structure.
  */
-typedef struct {
-	println_func_ptr_t println; /* Function pointer to user defined println function.      */
-	cmd_t *cmd_tbl;		    /* Pointer to series of commands which are to be accepted. */
-	size_t cmd_cnt;		    /* Number of commands in cmd_tbl.                          */
-} cli_t;
+struct cli_s {
+    println_func_ptr_t println;  /* Function pointer to user defined println function.      */
+    cmd_t* cmd_tbl;              /* Pointer to series of commands which are to be accepted. */
+    size_t cmd_cnt;              /* Number of commands in cmd_tbl.                          */
+};
 
 #endif

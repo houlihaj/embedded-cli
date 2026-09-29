@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2019 Sean Farrelly
+ * Copyright (c) 2026 John Houlihan
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,70 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * File        cli.h
- * Created by  Sean Farrelly
- * Version     1.1
+ * File        cli_fns.h
+ * Created by  John Houlihan
+ * Version     1.0
  *
  */
 
-/*! @file cli.h
+/*! @file cli_fns.h
  * @brief Command-line interface API definitions.
  */
 
 /*!
  * @defgroup CLI API
  */
-#ifndef _CLI_H_
-#define _CLI_H_
+#ifndef _CLI_FNS_H_
+#define _CLI_FNS_H_
 
 /*! CPP guard */
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#include <stdint.h>
 #include "cli_defs.h"
 
-/*!
- * @brief This API initialises the command-line interface.
- *
- * @param[in] cli : Pointer to cli handle struct.
- *
- * @return cli_status_t
- */
-cli_status_t cli_init(cli_t* cli);
+uint8_t cli_set_cmd_members(cli_t* cli);
 
-/*!
- * @brief This API deinitialises the command-line interface.
- *
- * @param[in] cli : Pointer to cli handle struct.
- *
- * @return cli_status_t
- */
-cli_status_t cli_deinit(cli_t* cli);
-
-/*!
- * @brief This API must be periodically called by the user to process and
- * execute any commands received.
- *
- * @param[in] cli : Pointer to cli handle struct.
- *
- * @return cli_status_t
- */
-cli_status_t cli_process(cli_t* cli);
-
-/*!
- * @brief This API should be called from the devices interrupt handler whenever
- * a character is received over the input stream.
- *
- * @param[in] cli : Pointer to cli handle struct.
- * @param[in]   c : The character received.
- *
- * @return cli_status_t
- */
-cli_status_t cli_put(cli_t* cli, char c);
+static cli_status_t help_func(cli_t* cli, int argc, char** argv);
+static cli_status_t blink_func(cli_t* cli, int argc, char** argv);
 
 #ifdef __cplusplus
 }
-#endif /* End of CPP guard */
-#endif /* CLI_H_ */
+#endif  /* End of CPP guard */
+#endif  /* _CLI_FNS_H_ */
 /** @}*/
