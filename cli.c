@@ -73,7 +73,8 @@ cli_status_t cli_deinit(cli_t* cli)
 	return CLI_OK;
 }
 
-/*! @brief This API must be periodically called by the user to process and
+/*!
+ * @brief This API must be periodically called by the user to process and
  * execute any commands received.
  */
 cli_status_t cli_process(cli_t* cli)
@@ -100,7 +101,6 @@ cli_status_t cli_process(cli_t* cli)
 		if (strcmp(argv[0], cli->cmd_tbl[i].cmd) == 0)
 		{
 			/* Found a match, execute the associated function. */
-			// cli_status_t return_value = cli->cmd_tbl[i].func(*cli, argc, argv);
 			cli_status_t return_value = cli->cmd_tbl[i].func(cli, argc, argv);
 			cli_print(cli, cli_prompt); /* Print the CLI prompt to the user. */
 			cmd_pending = 0;
@@ -129,7 +129,6 @@ cli_status_t cli_put(cli_t* cli, char c)
 		if (!cmd_pending)
 		{
 			*buf_ptr = '\0';                     /* Terminate the msg and reset the msg ptr.      */
-			// strcpy(cmd_buf, buf);               /* Copy string to command buffer for processing. */
 			strcpy((char*)cmd_buf, (char*)buf);  /* Copy string to command buffer for processing. */
 			cmd_pending = 1;
 			buf_ptr = buf;                       /* Reset buf_ptr to beginning.                   */

@@ -13,7 +13,7 @@ This useful tool allows a user to remotely invoke functions on their device by s
 ## Introduction
 
 This package contains files to implement a simple command-line interface.
-The package includes cli.c and cli.h.
+The package includes cli.c, cli.h, cli_fns.c, cli_fns.h, and cli_defs.h.
 
 ## Integration details
 
@@ -30,7 +30,8 @@ The package includes cli.c and cli.h.
 - cli.c : This source file contains the implementation of the CLI.
 - cli.h : This header file contains the definitions of the CLI user API.
 - cli_fns.c : This source file contains the implementation of the application specific CLI commands.
-- cli_fns.h : This source file contains the declaration of the application specific CLI commands.
+- cli_fns.h : This header file contains the declaration of the application specific CLI commands.
+- cli_defs.h : This header file defines the cli_t, cmd_t, and cli_status_t objects.
 
 ## Supported interfaces
 
@@ -39,7 +40,7 @@ The package includes cli.c and cli.h.
 
 ## Integration Guide
 
-### Initialising the CLI
+### Initializing the CLI
 
 To correctly set up the CLI, the user must do four things:
 
@@ -70,7 +71,7 @@ void UART_Rx_IrqHandler()
 }
 ```
 
-3. Create an instance of the CLI handle structure, and fill in the required parameters.
+3. Create an instance of the CLI handle structure and fill in the required parameters.
 
 ```c
 #include "cli.h"  // cli_t, cli_init
@@ -79,6 +80,7 @@ void UART_Rx_IrqHandler()
 cli_status_t rslt = CLI_OK;
 
 cli_t cli;
+cli.println = user_uart_println;
 cli_set_cmd_members(&cli);
 
 if ((rslt = cli_init(&cli)) != CLI_OK)

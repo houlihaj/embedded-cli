@@ -30,7 +30,7 @@ void UART_Rx_IrqHandler()
     cli_put(&cli, c);
 }
 
-void user_uart_println(char *string)
+void user_uart_println(char* string)
 {
     /* For example.. */
     HAL_UART_Transmit_IT(&huart, string, strlen(string));
