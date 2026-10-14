@@ -45,10 +45,10 @@ extern "C" {
 #include <stdint.h>
 #include "cli_defs.h"
 
-uint8_t cli_set_cmd_members(cli_t* cli);
+uint8_t cli_fns_set_cli_cmd_members(void);
 
-static cli_status_t help_func(cli_t* cli, int argc, char** argv);
-static cli_status_t blink_func(cli_t* cli, int argc, char** argv);
+static cli_status_t help_func(int argc, char** argv);
+static cli_status_t blink_func(int argc, char** argv);
 
 #ifdef __cplusplus
 }

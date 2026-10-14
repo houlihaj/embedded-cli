@@ -56,7 +56,7 @@ typedef enum {
 /*!
  * @brief Function type declarations.
  */
-typedef cli_status_t (*cmd_func_ptr_t)(cli_t* cli, int argc, char** argv);
+typedef cli_status_t (*cmd_func_ptr_t)(int argc, char** argv);
 typedef void (*println_func_ptr_t)(char* string);
 
 /*!

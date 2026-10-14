@@ -101,8 +101,8 @@ cli_status_t cli_process(cli_t* cli)
 		if (strcmp(argv[0], cli->cmd_tbl[i].cmd) == 0)
 		{
 			/* Found a match, execute the associated function. */
-			cli_status_t return_value = cli->cmd_tbl[i].func(cli, argc, argv);
-			cli_print(cli, cli_prompt); /* Print the CLI prompt to the user. */
+			cli_status_t return_value = cli->cmd_tbl[i].func(argc, argv);
+			cli_print(cli, cli_prompt);  /* Print the CLI prompt to the user. */
 			cmd_pending = 0;
 			return return_value;
 		}
@@ -111,7 +111,7 @@ cli_status_t cli_process(cli_t* cli)
 	/* Command not found */
 	cli_print(cli, cli_unrecog);
 
-	cli_print(cli, cli_prompt); /* Print the CLI prompt to the user. */
+	cli_print(cli, cli_prompt);  /* Print the CLI prompt to the user. */
 
 	cmd_pending = 0;
 	return CLI_E_CMD_NOT_FOUND;
