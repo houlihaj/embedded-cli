@@ -30,16 +30,17 @@
 /*! @file cli_fns.c
  * @brief Implementation of command-line interface.
  */
+#include "cli_fns.h"
 #include <stdlib.h>   /* atoi */
 #include <string.h>   /* strcmp */
-#include "cli_fns.h"  /* cli_t */
 
 static cli_t* cli_local;
 
 static cli_status_t help_func(int argc, char** argv);
 static cli_status_t blink_func(int argc, char** argv);
 
-cmd_t cmd_tbl[] = {
+cmd_t cmd_tbl[] =
+{
     {.cmd = "help", .func = help_func},
     {.cmd = "blink", .func = blink_func}
 };

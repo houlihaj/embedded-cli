@@ -75,12 +75,13 @@ void UART_Rx_IrqHandler()
 
 ```c
 #include "cli.h"  // cli_t, cli_init
-#include "cli_fns.h"  // cli_fns_set_cli_cmd_members
+#include "cli_fns.h"  // cli_fns_set_cli_instance, cli_fns_set_cli_cmd_members
 
 cli_status_t rslt = CLI_OK;
 
 cli_t cli;
 cli.println = user_uart_println;
+cli_fns_set_cli_instance(&cli);
 cli_fns_set_cli_cmd_members();
 
 if ((rslt = cli_init(&cli)) != CLI_OK)

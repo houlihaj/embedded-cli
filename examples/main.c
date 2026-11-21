@@ -1,5 +1,5 @@
 #include "cli.h"      // cli_t, cli_init
-#include "cli_fns.h"  // cli_set_cmd_members
+#include "cli_fns.h"  // cli_fns_set_cli_instance, cli_set_cmd_members
 
 void user_uart_println(char* msg);
 
@@ -8,7 +8,7 @@ cli_t cli;
 int main(void)
 {
     cli.println = user_uart_println;
-    cli_fns_set_cli_instance(*cli);
+    cli_fns_set_cli_instance(&cli);
     cli_fns_set_cli_cmd_members();  // set the cli_t (i.e. cli) cmd_tbl and cmd_cnt members
     cli_init(&cli);
 
