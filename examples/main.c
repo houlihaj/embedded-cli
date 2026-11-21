@@ -8,6 +8,7 @@ cli_t cli;
 int main(void)
 {
     cli.println = user_uart_println;
+    cli_fns_set_cli_instance(*cli);
     cli_fns_set_cli_cmd_members();  // set the cli_t (i.e. cli) cmd_tbl and cmd_cnt members
     cli_init(&cli);
 

@@ -30,11 +30,14 @@
 /*! @file cli_fns.c
  * @brief Implementation of command-line interface.
  */
-#include <stdlib.h>  /* atoi */
-#include <string.h>  /* strcmp */
-#include "cli_fns.h"
+#include <stdlib.h>   /* atoi */
+#include <string.h>   /* strcmp */
+#include "cli_fns.h"  /* cli_t */
 
-extern cli_t cli;  /* must be created in the application code (ex. main.c) */
+static cli_t* cli_local;
+
+static cli_status_t help_func(int argc, char** argv);
+static cli_status_t blink_func(int argc, char** argv);
 
 cmd_t cmd_tbl[] = {
     {.cmd = "help", .func = help_func},
@@ -45,12 +48,24 @@ cmd_t cmd_tbl[] = {
   * @brief  Summary of the function
   * @note   In-depth description of the function
   *
+  * @param  self  an instance of the cli_fns_t object 
+  * @retval
+  */
+uint8_t cli_fns_set_cli_instance(cli_t* cli)
+{
+    *cli_local = *cli;
+}
+
+/**
+  * @brief  Summary of the function
+  * @note   In-depth description of the function
+  *
   * @retval
   */
 uint8_t cli_fns_set_cli_cmd_members(void)
 {
-    cli.cmd_tbl = cmd_tbl;
-    cli.cmd_cnt = sizeof(cmd_tbl) / sizeof(cmd_t);
+    cli_local->cmd_tbl = cmd_tbl;
+    cli_local->cmd_cnt = sizeof(cmd_tbl) / sizeof(cmd_t);
     return 0;
 }
 
@@ -58,12 +73,11 @@ uint8_t cli_fns_set_cli_cmd_members(void)
   * @brief  Summary of the function
   * @note   In-depth description of the function
   *
-  * @param  cli  an instance of the cli_t object
   * @retval cli_status_t
   */
 static cli_status_t help_func(int argc, char** argv)
 {
-    cli.println("HELP function executed\r\n");
+    cli_local->println("HELP function executed\r\n");
     return CLI_OK;
 }
 
@@ -80,7 +94,7 @@ static cli_status_t blink_func(int argc, char** argv)
     {
         if (strcmp(argv[1], "-H") == 0 || strcmp(argv[1], "--help") == 0)
         {
-            cli.println("BLINK help menu\r\n");
+            cli_local->println("BLINK help menu\r\n");
         }
         else
         {
@@ -89,7 +103,7 @@ static cli_status_t blink_func(int argc, char** argv)
     }
     else
     {
-        cli.println("BLINK function executed\r\n");
+        cli_local->println("BLINK function executed\r\n");
     }
     return CLI_OK;
 }
